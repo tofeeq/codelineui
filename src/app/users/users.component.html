@@ -1,0 +1,26 @@
+<div class="row">
+	<div class="col-xs-12">
+		<h2>Users component</h2>
+		<p>{{ 'User details' }}</p> 
+		<div>User status {{ status }}</div> 
+		<div>user id  {{ userId }}</div>
+		<!-- getUsername() is binded here with element div, and it has a conditional logic in ts, so when ever variable changes, conditional logic result is changed as well, hence function is binded her so its value will also be changed -->
+		<div> user name {{ getUsername() }} </div>
+
+		<p><button class="btn btn-primary" [disabled]="!status" (click)="onChangeStatus()">Connect this user</button></p>
+		<p [innerHTML]="status"></p>
+
+		<div>
+			<input type="text" class="form-control" (input)="onAddUser($event)">
+		</div>
+		<div>
+			<input type="text" class="form-control" [(ngModel)]="username">
+		</div>
+
+		<p *ngIf username ; else nouserTofeeq>Hurray</p>
+		<ng-template #nouserTofeeq>
+			<p>No the user is not tofeeq</p>
+		</ng-template>
+
+	</div>
+</div>
