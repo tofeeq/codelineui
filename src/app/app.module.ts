@@ -4,23 +4,20 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { WeatherComponent } from './weather/weather.component';
 import { ServerComponent } from './server/server.component';
 import { UsersComponent } from './users/users.component';
 
 //load Router
 import { AppRoutingModule } from './app-routing.module';
 
-//for web api simulations
-import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { InMemoryDataService }  from './in-memory-data.service';
-
-
 
  
 //load components
 import { AppComponent } from './app.component';
 
- //loading services
+//loading services
+import { WeatherService } from './weather/weather.service';
 
 @NgModule({
 
@@ -28,7 +25,6 @@ import { AppComponent } from './app.component';
     BrowserModule,
     FormsModule,
     HttpModule,
-    InMemoryWebApiModule.forRoot(InMemoryDataService),
     AppRoutingModule
   ],
   
@@ -37,9 +33,10 @@ import { AppComponent } from './app.component';
     ServerComponent,
     UsersComponent,
     DashboardComponent,
+    WeatherComponent,
   ],
 
-  providers: [], //singleton to share across all
+  providers: [WeatherService], //singleton to share across all
 
   bootstrap: [AppComponent]
 
