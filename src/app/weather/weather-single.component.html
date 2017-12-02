@@ -1,0 +1,28 @@
+<div *ngIf="weather">
+	<div class="row" >
+		<div class="col-md-12">
+			<div class="weather-detail">
+				<h4>{{ weather[0].city | uppercase }}</h4>
+				<hr />
+				<div class="col-xs-6 col-md-4 weather-box" *ngFor="let w of weather">
+					<dl class="dl-horizontal" >
+						<h4>{{ w.date | date : 'EEEE' }}</h4>
+						<dd><img src="{{ w.icon }}" style="width: 64px; height:64px;" /></dd>
+						<dt>Temprature</dt>
+						<dd>{{ w.temprature}}&#8457;</dd>
+						<dt>Minimum Temprature </dt>
+						<dd> {{ w.mintemprature}}&#8457;</dd>
+						<dt>Maximum Temprature</dt>
+						<dd> {{ w.maxtemprature}}&#8457;</dd>
+					</dl>
+				</div>	
+			</div>
+		</div>
+	</div>
+	<hr>
+	<div class="row">
+		<div class="col-md-12">
+			<button class="btn btn-primary" (click)="goBack()">Back</button>
+		</div>
+	</div>
+</div>

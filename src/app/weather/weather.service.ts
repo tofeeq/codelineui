@@ -41,6 +41,8 @@ export class WeatherService {
 
 	  				var weath = new Weather();
 	  				weath.city = i;
+	  				weath.id = weatherjson.woeid;
+	  				weath.date = w.applicable_date;
 	  				weath.temprature = Math.round(w.the_temp);
 	  				weath.mintemprature = Math.round(w.min_temp);
 	  				weath.maxtemprature = Math.round(w.max_temp);
@@ -49,6 +51,44 @@ export class WeatherService {
 	  				data.push(weath);
 	  			}
 	  			//return response.json()
+	  			return data;
+	  		})
+	  		.catch(this.handleError);
+	}
+
+	getWeather(id : number): Promise<any> {
+		const url = `${this.apiUrl}?command=location&woeid=${id}&out=true`;
+		console.log(url)
+
+		return this.http.get(url)
+	    .toPromise()
+	    .then(response => {
+	  			
+	  			var weatherData = response.json();
+
+	  			var data = [];
+
+				var weatherjson = weatherData.consolidated_weather;	  	
+
+				for (var i in weatherjson) {
+
+					var w = weatherjson[i];
+				
+					var weath = new Weather();
+					//console.log(w);
+
+	  				weath.city = weatherData.title;
+	  				weath.id = w.id;
+	  				weath.date = w.applicable_date;
+	  				weath.temprature = Math.round(w.the_temp);
+	  				weath.mintemprature = Math.round(w.min_temp);
+	  				weath.maxtemprature = Math.round(w.max_temp);
+	  				weath.icon = 'https://www.metaweather.com/static/img/weather/' 
+	  					+ w.weather_state_abbr + '.svg';
+	  				data.push(weath);
+				}
+	  			
+	  			console.log(data)
 	  			return data;
 	  		})
 	  		.catch(this.handleError);

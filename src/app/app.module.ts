@@ -5,6 +5,8 @@ import { HttpModule } from '@angular/http';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { WeatherComponent } from './weather/weather.component';
+import { WeatherSingleComponent } from './weather/weather-single.component';
+
 import { UsersComponent } from './users/users.component';
 
 //load Router
@@ -32,6 +34,7 @@ import { WeatherService } from './weather/weather.service';
     UsersComponent,
     DashboardComponent,
     WeatherComponent,
+    WeatherSingleComponent,
   ],
 
   providers: [WeatherService], //singleton to share across all
