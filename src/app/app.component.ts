@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-
+import { Router } from '@angular/router'; 
 
 @Component({
   selector: 'app-root',
@@ -10,4 +10,11 @@ import { Component } from '@angular/core';
 
 export class AppComponent {
   	title = "Main App"; //model title
+
+  	constructor (private router: Router) {
+  	}
+
+  	weathersearch(keyword) {
+      this.router.navigate(['/weather/search/' + keyword]);
+  }
 }

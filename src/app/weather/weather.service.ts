@@ -56,6 +56,38 @@ export class WeatherService {
 	  		.catch(this.handleError);
 	}
 
+	findWeathers(keyword): Promise<Weather[]> {
+	  return this.http.get(this.apiUrl + '?command=location', {
+	  			params : {"locations[]" : [keyword]}
+	  		})
+	  		.toPromise()
+	  		//.then(response => response.json())
+	  		.then(response => {
+	  			var data = [];
+	  			var weatherData = response.json();
+
+	  			for (var i in weatherData) {
+	  				var weatherjson = JSON.parse(weatherData[i]);
+	  				var w = weatherjson.consolidated_weather[0];
+
+
+	  				var weath = new Weather();
+	  				weath.city = i;
+	  				weath.id = weatherjson.woeid;
+	  				weath.date = w.applicable_date;
+	  				weath.temprature = Math.round(w.the_temp);
+	  				weath.mintemprature = Math.round(w.min_temp);
+	  				weath.maxtemprature = Math.round(w.max_temp);
+	  				weath.icon = 'https://www.metaweather.com/static/img/weather/' 
+	  					+ w.weather_state_abbr + '.svg';
+	  				data.push(weath);
+	  			}
+	  			//return response.json()
+	  			return data;
+	  		})
+	  		.catch(this.handleError);
+	}
+
 	getWeather(id : number): Promise<any> {
 		const url = `${this.apiUrl}?command=location&woeid=${id}&out=true`;
 		console.log(url)

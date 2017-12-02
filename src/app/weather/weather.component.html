@@ -2,6 +2,7 @@
 	<div class="col-md-12">
 		<div class="grid grid-pad">
 			<h2>Weather Today</h2>
+			
 			<div class="col-md-12 weather-panel" *ngFor="let weather of weathers">
 				<div class="weather">
 					<a [routerLink]="['/weather', weather.id]">{{ weather.city }}</a>

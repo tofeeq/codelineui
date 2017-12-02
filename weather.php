@@ -102,6 +102,8 @@ function location($woeid = null) {
 				if ($result) {
 					$toUpdate = true;
 					$locations[$location] = json_decode($result);
+				} else {
+					print_r($result);
 				}
 			}
 		}
@@ -110,6 +112,8 @@ function location($woeid = null) {
 			file_put_contents('cache.txt', json_encode($locations));
 		}
 		$results = [];
+
+		//echo "locations;"; print_r($_GET['locations']);
 		//get weathers
 		foreach ($_GET['locations'] as $location) {
 			$woeid = $locations[$location][0]['woeid'];
