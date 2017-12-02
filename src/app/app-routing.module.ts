@@ -3,7 +3,6 @@ import { RouterModule, Routes }  from '@angular/router';
 
 
 //LOADING COMPONENTS required by routes
-import { ServerComponent } from './server/server.component';
 import { UsersComponent } from './users/users.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 

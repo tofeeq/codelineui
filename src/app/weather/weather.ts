@@ -1,7 +1,7 @@
 export class Weather {
-	city : number;
-	temprature : string;
-	mintemprature : string;
-	maxtemprature : string;
+	city : string;
+	temprature : number;
+	mintemprature : number;
+	maxtemprature : number;
 	icon : string;
 }

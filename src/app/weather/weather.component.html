@@ -1,7 +1,21 @@
 <div class="row">
-	<div class="col-md-6">
+	<div class="col-md-12">
 		<div class="grid grid-pad">
 			<h2>Weather Today</h2>
+			<div class="col-md-12 weather-panel" *ngFor="let weather of weathers">
+				<div class="weather">
+					<a [routerLink]="['/weather', weather.id]">{{ weather.city }}</a>
+					<dl class="dl-horizontal">
+						<dd><img src="{{ weather.icon }}" style="width: 64px; height:64px;" /></dd>
+						<dt>Temprature</dt>
+						<dd>{{ weather.temprature}}&#8457;</dd>
+						<dt>Minimum Temprature </dt>
+						<dd> {{ weather.mintemprature}}&#8457;</dd>
+						<dt>Maximum Temprature</dt>
+						<dd> {{ weather.maxtemprature}}&#8457;</dd>
+					</dl>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

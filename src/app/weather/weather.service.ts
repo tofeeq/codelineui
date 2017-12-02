@@ -22,12 +22,36 @@ export class WeatherService {
 	    return Promise.reject(error.message || error);
 	}
 
-	
+	private locations = ["Istanbul", "Berlin", "London", "Helsinki", "Dublin", "Vancouver"];
+
 	getWeathers(): Promise<Weather[]> {
-	  return this.http.get(this.apiUrl + '?command=location')
-	  				.toPromise()
-	  				.then(response => response.json().data as Weather[])
-	  				.catch(this.handleError);
+	  return this.http.get(this.apiUrl + '?command=location', {
+	  			params : {"locations[]" : this.locations}
+	  		})
+	  		.toPromise()
+	  		//.then(response => response.json())
+	  		.then(response => {
+	  			var data = [];
+	  			var weatherData = response.json();
+
+	  			for (var i in weatherData) {
+	  				var weatherjson = JSON.parse(weatherData[i]);
+	  				var w = weatherjson.consolidated_weather[0];
+
+
+	  				var weath = new Weather();
+	  				weath.city = i;
+	  				weath.temprature = Math.round(w.the_temp);
+	  				weath.mintemprature = Math.round(w.min_temp);
+	  				weath.maxtemprature = Math.round(w.max_temp);
+	  				weath.icon = 'https://www.metaweather.com/static/img/weather/' 
+	  					+ w.weather_state_abbr + '.svg';
+	  				data.push(weath);
+	  			}
+	  			//return response.json()
+	  			return data;
+	  		})
+	  		.catch(this.handleError);
 	}
 
 

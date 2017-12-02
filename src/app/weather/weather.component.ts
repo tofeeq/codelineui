@@ -14,13 +14,17 @@ import { WeatherService } from './weather.service';
 export class WeatherComponent implements OnInit {
   	title = "Weather"; //model 
   	
-  	weathers : Weather[];
+  	weathers ;
 
   	constructor (private weatherService: WeatherService) {
   	}
 
 	ngOnInit() : void {
-		this.weatherService.getWeathers().then(response => this.weathers = response );		
+		this.weatherService.getWeathers().then(
+        response => {
+          this.weathers = response 
+        }
+      );		
 	}
 
 }
