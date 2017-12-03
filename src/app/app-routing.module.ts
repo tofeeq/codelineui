@@ -24,8 +24,9 @@ import { WeatherSingleComponent } from './weather/weather-single.component';
       component: UsersComponent
     },
     {
-      path: 'weather/search/:name',
-      component: WeatherComponent
+      path: 'weather/search/:location',
+      pathMatch: 'full',
+      component: WeatherComponent,
     },
     {
       path: 'weather/:id',

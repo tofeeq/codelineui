@@ -14,7 +14,5 @@ export class AppComponent {
   	constructor (private router: Router) {
   	}
 
-  	weathersearch(keyword) {
-      this.router.navigate(['/weather/search/' + keyword]);
-  }
+  	
 }

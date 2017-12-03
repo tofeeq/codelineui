@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { Weather } from './weather';
 import { WeatherService } from './weather.service';
-import { Router } from '@angular/router'; 
+import { Router, ActivatedRoute,  Params } from '@angular/router'; 
+import { Location }                 from '@angular/common';
+import 'rxjs/add/operator/switchMap';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'weather',
@@ -14,28 +17,41 @@ import { Router } from '@angular/router';
 export class WeatherComponent implements OnInit {
   	title = "Weather"; //model 
   	
-  	weathers ;
+  	weathers: Weather[];
 
-  	constructor (private weatherService: WeatherService, private router: Router) {
-  	}
+  	constructor (private weatherService: WeatherService, private route: ActivatedRoute, private location: Location, private router: Router) {
+      
+    }
 
-	ngOnInit() : void {
-    if (this.router.url.match('/search')) {
-        var parts = this.router.url.split("/");
-        this.weatherService.findWeathers(parts[parts.length - 1]).then(
-          response => {
-            this.weathers = response 
+    ngOnChanges () : void {
+    }
+    
+
+    ngDoCheck () : void {
+    }
+
+    
+    ngOnInit() : void {
+        this.route.params.switchMap(
+          (params: Params) => {
+            if (params['location'])
+              return this.weatherService.findWeathers(
+                params['location']
+              )
+            else
+              return this.weatherService.getWeathers() 
           }
-        );
-    } else {
+         )
+          .subscribe(weathers => this.weathers = weathers)
+          ;	
+	  }
 
-  		this.weatherService.getWeathers().then(
-          response => {
-            this.weathers = response 
-          }
-        );
-    }		
-	}
 
+  
+
+    weathersearch(keyword) {
+        console.log("event clicked", "navigation to: ", '/weather/search/' + keyword);
+        this.router.navigate(['/weather/search/' + keyword]);
+    }
   
 }

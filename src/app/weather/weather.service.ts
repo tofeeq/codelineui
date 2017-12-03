@@ -25,6 +25,7 @@ export class WeatherService {
 	private locations = ["Istanbul", "Berlin", "London", "Helsinki", "Dublin", "Vancouver"];
 
 	getWeathers(): Promise<Weather[]> {
+	
 	  return this.http.get(this.apiUrl + '?command=location', {
 	  			params : {"locations[]" : this.locations}
 	  		})
