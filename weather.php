@@ -116,10 +116,16 @@ function location($woeid = null) {
 		//echo "locations;"; print_r($_GET['locations']);
 		//get weathers
 		foreach ($_GET['locations'] as $location) {
-			$woeid = $locations[$location][0]['woeid'];
-			$results[$location] = location($woeid);
+			if (isset($locations[$location][0]['woeid'])) {
+				$woeid = $locations[$location][0]['woeid'];
+				$results[$location] = location($woeid);
+			}
 		}
 		
+		if (empty($results))
+			quitWithJsonResponse(['error' => "Location not found"], 404);
+
+
 		quitWithJsonResponse($results);
 		return ;
 	}

@@ -6,6 +6,7 @@ import { Router, ActivatedRoute,  Params } from '@angular/router';
 import { Location }                 from '@angular/common';
 import 'rxjs/add/operator/switchMap';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
 
 @Component({
   selector: 'weather',
@@ -17,7 +18,8 @@ import { Observable } from 'rxjs/Observable';
 export class WeatherComponent implements OnInit {
   	title = "Weather"; //model 
   	
-  	weathers: Weather[];
+  	weathers: any;
+    errormsg : string ;
 
   	constructor (private weatherService: WeatherService, private route: ActivatedRoute, private location: Location, private router: Router) {
       
@@ -31,18 +33,41 @@ export class WeatherComponent implements OnInit {
     }
 
     
+
     ngOnInit() : void {
+
         this.route.params.switchMap(
           (params: Params) => {
-            if (params['location'])
-              return this.weatherService.findWeathers(
-                params['location']
-              )
-            else
+            if (params['location']) {
+              this.errormsg = "";
+              console.log(params['location'])
+              return this.weatherService.findWeathers(params['location'])
+                .catch(err => {
+                  this.errormsg = "No results were found. Try changing the keyword!"
+                  return Observable.of(err)
+              });
+            } else {
               return this.weatherService.getWeathers() 
+            }
           }
          )
-          .subscribe(weathers => this.weathers = weathers)
+          .subscribe(
+            response => {
+              console.log("weathers found")
+              console.log(response)
+              if (!this.errormsg) {
+                this.weathers = response;
+              } else {
+                this.weathers = ""
+              }
+            },
+            err => {
+              console.log("error in weathers")
+              this.weathers = ""
+              this.errormsg =  "No results were found. Try changing the keyword!"
+            },
+            () => console.log("completed")
+          )
           ;	
 	  }
 
